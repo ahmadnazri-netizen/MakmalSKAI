@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tempahan Makmal Komputer</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--tx:#1b2333;--mu:#667085;--bd:#dfe3ec;--pr:#2457d6;--prt:#fff;--ok:#117a45;--okb:#dff5e8;--wa:#8a5a00;--wab:#fff0cc;--er:#b42318;--erb:#fde4e1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141d;--card:#192031;--tx:#e8ecf5;--mu:#98a2b8;--bd:#2a3347;--pr:#6f93ff;--prt:#0b1020;--ok:#5fd394;--okb:#12352444;--wa:#f3c969;--wab:#3a2e0e;--er:#ff8f85;--erb:#3d1814}}
+:root[data-theme="dark"]{--bg:#10141d;--card:#192031;--tx:#e8ecf5;--mu:#98a2b8;--bd:#2a3347;--pr:#6f93ff;--prt:#0b1020;--ok:#5fd394;--okb:#12352444;--wa:#f3c969;--wab:#3a2e0e;--er:#ff8f85;--erb:#3d1814}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--card);border-bottom:1px solid var(--bd)}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0}h2{font-size:17px;margin:0 0 12px}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+button,.btn{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:8px}
+button:hover{border-color:var(--pr)}
+nav button.on,button.pri{background:var(--pr);color:var(--prt);border-color:var(--pr)}
+button.sm{padding:4px 9px;font-size:13px}
+button.ok{color:var(--ok)}button.er{color:var(--er)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:16px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+label{display:block;font-size:13px;color:var(--mu);margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}
+.labs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.lab h3{margin:0 0 4px;font-size:16px}.lab p{margin:2px 0;color:var(--mu);font-size:14px}
+.tag{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600}
+.t-ok{background:var(--okb);color:var(--ok)}.t-wa{background:var(--wab);color:var(--wa)}.t-er{background:var(--erb);color:var(--er)}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.slot{padding:6px 10px;border-radius:8px;font-size:13px;border:1px solid var(--bd)}
+.s-free{background:var(--okb);color:var(--ok)}.s-bk{background:var(--erb);color:var(--er)}.s-pn{background:var(--wab);color:var(--wa)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--bd);vertical-align:top;white-space:nowrap}
+td.wr{white-space:normal}
+.acts{display:flex;gap:4px;flex-wrap:wrap}
+.msg{padding:10px 12px;border-radius:8px;margin:10px 0;font-size:14px}
+.msg.e{background:var(--erb);color:var(--er)}.msg.s{background:var(--okb);color:var(--ok)}
+.muted{color:var(--mu)}
+.hide{display:none}
+dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);max-width:520px;width:calc(100% - 24px);padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.sub{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.eq{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.eq input[type=checkbox]{width:auto}.eq .nm{flex:1;min-width:0}.eq input[type=number]{width:80px}
+.tw td input.en,.tw td input.eb,.tw td input.eo{min-width:140px}.tw td input,.tw td select{width:auto}
+footer{text-align:center;color:var(--mu);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<header><div class="wrap top">
+  <h1>🖥️ Tempahan Makmal Komputer</h1>
+  <nav id="nav">
+    <button data-v="tempah" class="on">Tempah</button>
+    <button data-v="jadual">Jadual</button>
+    <button data-v="admin">Admin</button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <section id="v-tempah">
+    <div class="card"><h2>Makmal tersedia</h2><div class="labs" id="labCards"></div></div>
+    <div class="card">
+      <h2>Borang tempahan</h2>
+      <div class="grid">
+        <div><label>Makmal</label><select id="fLab"></select></div>
+        <div><label>Tarikh</label><input type="date" id="fDate"></div>
+        <div><label>Masa mula</label><select id="fStart"></select></div>
+        <div><label>Masa tamat</label><select id="fEnd"></select></div>
+        <div><label>Nama penempah</label><input id="fName" maxlength="60"></div>
+        <div><label>No. ID / staf / kelas</label><input id="fId" maxlength="30"></div>
+        <div><label>Bilangan peserta</label><input type="number" id="fPax" min="1" value="1"></div>
+        <div><label>Tujuan</label><input id="fPur" maxlength="120"></div>
+      </div>
+      <div style="margin:14px 0 4px"><label>Peralatan makmal ini (pilih jika perlu dan tetapkan jumlah)</label><div id="eqList"></div></div>
+      <div class="slots" id="slotView"></div>
+      <div id="fMsg"></div>
+      <button class="pri" id="fSend">Hantar tempahan</button>
+      <p class="muted" style="font-size:13px">Tempahan akan berstatus “Menunggu” sehingga diluluskan oleh admin.</p>
+    </div>
+  </section>
+
+  <section id="v-jadual" class="hide">
+    <div class="card">
+      <h2>Jadual tempahan</h2>
+      <div class="grid" style="margin-bottom:12px">
+        <div><label>Makmal</label><select id="jLab"></select></div>
+        <div><label>Tarikh</label><input type="date" id="jDate"></div>
+      </div>
+      <div class="tw" id="jTable"></div>
+    </div>
+  </section>
+
+  <section id="v-admin" class="hide">
+    <div id="loginBox" class="card" style="max-width:380px">
+      <h2>Log masuk admin</h2>
+      <label>Kata laluan</label><input type="password" id="aPass">
+      <div id="aMsg"></div>
+      <button class="pri" id="aLogin" style="margin-top:8px">Log masuk</button>
+      <p class="muted" style="font-size:13px">Kata laluan asal: <b>admin123</b> (tukar di tab Tetapan).</p>
+    </div>
+    <div id="panel" class="hide">
+      <div class="sub">
+        <button data-a="bk" class="on pri">Tempahan</button>
+        <button data-a="lb">Data makmal</button>
+        <button data-a="eq">Peralatan</button>
+        <button data-a="st">Tetapan</button>
+        <button id="aSync" class="hide pri">↻ Segerak ke Google Sheet</button><span id="syncStat" class="muted" style="align-self:center;font-size:13px"></span>
+        <button id="aOut" style="margin-left:auto">Log keluar</button>
+      </div>
+      <div id="a-bk" class="card">
+        <div class="grid" style="margin-bottom:12px">
+          <div><label>Makmal</label><select id="aLab"></select></div>
+          <div><label>Status</label><select id="aSt"><option value="">Semua</option><option>Menunggu</option><option>Diluluskan</option><option>Ditolak</option></select></div>
+          <div style="align-self:end"><button class="pri" id="aAdd">+ Tambah tempahan</button></div>
+        </div>
+        <div class="tw" id="aTable"></div>
+      </div>
+      <div id="a-lb" class="card hide"><h2>Data makmal</h2><div class="labs" id="aLabs"></div></div>
+      <div id="a-eq" class="card hide">
+        <h2>Senarai peralatan</h2>
+        <p class="muted" style="font-size:13px;margin-top:-6px">Admin menentukan sendiri jenis peralatan. Senarai ini dipaparkan pada borang tempahan.</p>
+        <div class="grid" style="margin-bottom:12px;align-items:end">
+          <div><label>Makmal</label><select id="eLab"></select></div>
+          <div><label>Nama peralatan</label><input id="eName" maxlength="40" placeholder="cth: Projektor"></div>
+          <div><label>Jenama</label><input id="eBrand" maxlength="40" placeholder="cth: Epson"></div>
+          <div><label>Jumlah</label><input type="number" id="eTotal" min="1" value="1"></div>
+          <div><label>Status</label><select id="eStat"><option>Tersedia</option><option>Rosak</option><option>Penyelenggaraan</option></select></div>
+          <div><label>Catatan</label><input id="eNote" maxlength="80"></div>
+          <div><button class="pri" id="eAdd">+ Tambah</button></div>
+        </div>
+        <div id="eMsg"></div>
+        <div class="acts" style="margin-bottom:8px"><button class="er sm hide" id="eDelSel">Padam dipilih</button><span id="eSelN" class="muted" style="font-size:13px;align-self:center"></span></div>
+        <div class="tw" id="eTable"></div>
+      </div>
+      <div id="a-st" class="card hide">
+        <h2>Tetapan</h2>
+        <div class="grid">
+          <div><label>Waktu mula (slot pertama)</label><input type="time" id="sOpen" step="900"></div>
+          <div><label>Waktu tamat (slot terakhir berakhir)</label><input type="time" id="sClose" step="900"></div>
+          <div><label>Kata laluan baharu</label><input type="password" id="sPass" placeholder="Biarkan kosong jika tidak tukar"></div>
+        </div>
+        <div id="sMsg"></div>
+        <div class="row" style="justify-content:flex-start">
+          <button class="pri" id="sSave">Simpan tetapan</button>
+          <button class="er" id="sReset">Set semula semua data</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <h2 id="dTitle">Tempahan</h2>
+  <div class="grid">
+    <div><label>Makmal</label><select id="dLab"></select></div>
+    <div><label>Tarikh</label><input type="date" id="dDate"></div>
+    <div><label>Mula</label><select id="dStart"></select></div>
+    <div><label>Tamat</label><select id="dEnd"></select></div>
+    <div><label>Nama</label><input id="dName"></div>
+    <div><label>No. ID</label><input id="dId"></div>
+    <div><label>Peserta</label><input type="number" id="dPax" min="1"></div>
+    <div><label>Status</label><select id="dSt"><option>Menunggu</option><option>Diluluskan</option><option>Ditolak</option></select></div>
+  </div>
+  <div style="margin-top:12px"><label>Tujuan</label><input id="dPur"></div>
+  <div style="margin-top:12px"><label>Peralatan</label><div id="dEq"></div></div>
+  <div id="dMsg"></div>
+  <div class="row"><button id="dCancel">Batal</button><button class="pri" id="dSave">Simpan</button></div>
+</dialog>
+
+<dialog id="cfm"><p id="cMsg" style="margin-top:0"></p><div class="row"><button id="cNo">Batal</button><button class="er" id="cYes">Ya, padam</button></div></dialog>
+<footer>Data disimpan dalam pelayar peranti ini. Admin (pemilik halaman) boleh menyegerak data ke Google Sheet.</footer>
+
+<script>
+const KEY='makmal_v1';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const hh=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const defaults=()=>({
+  labs:[
+    {id:1,name:'Makmal Komputer 1',capacity:30,pcs:30,status:'Aktif',notes:'Windows 11, projektor, penyaman udara'},
+    {id:2,name:'Makmal Komputer 2',capacity:24,pcs:24,status:'Aktif',notes:'Linux & Windows, papan putih interaktif'}],
+  bookings:[],
+  equipment:[],
+  v:2,
+  settings:{open:465,close:795,unit:'min',pass:'admin123'}
+});
+let D;
+try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){D=null}
+if(!D||!D.labs)D=defaults();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}queueSync()};
+/* migrasi data lama (jam) kepada minit */
+if(D.v!==2){D.bookings.forEach(b=>{b.start*=60;b.end*=60});D.v=2;save()}
+if(!D.equipment){D.equipment=[];save()}
+D.equipment.forEach(q=>{if(q.lab==null)q.lab=D.labs[0].id;if(q.brand==null)q.brand=''});
+D.bookings.forEach(b=>{if(!b.equip)b.equip=[]});
+/* waktu operasi baharu: 07:45 - 13:15 (disimpan dalam minit) */
+if(D.settings.unit!=='min'){D.settings.open=465;D.settings.close=795;D.settings.unit='min';save()}
+let isAdmin=false;
+const lab=id=>D.labs.find(l=>l.id==id);
+const nextId=()=>Math.max(0,...D.bookings.map(b=>b.id))+1;
+
+function overlap(b,ignore){
+  return D.bookings.find(o=>o.id!==ignore&&o.status!=='Ditolak'&&o.lab==b.lab&&o.date===b.date&&b.start<o.end&&o.start<b.end);
+}
+function hoursOpts(sel,from,to,selected){
+  sel.innerHTML='';
+  for(let m=from;m<=to;m+=30)sel.add(new Option(hh(m),m));
+  if(selected!=null&&![...sel.options].some(o=>+o.value===+selected))sel.add(new Option(hh(selected),selected));
+  if(selected!=null)sel.value=selected;
+}
+function fillHours(sS,sE,s,e){
+  const o=D.settings.open,c=D.settings.close;
+  hoursOpts(sS,o,c-30,s??o);
+  hoursOpts(sE,o+30,c,e??o+30);
+}
+function labOptions(sel,onlyActive,all){
+  const cur=sel.value;sel.innerHTML='';
+  if(all)sel.add(new Option('Semua makmal',''));
+  D.labs.filter(l=>!onlyActive||l.status==='Aktif').forEach(l=>sel.add(new Option(l.name,l.id)));
+  if(cur&&[...sel.options].some(o=>o.value===cur))sel.value=cur;
+}
+const tagFor=s=>s==='Diluluskan'||s==='Aktif'?'t-ok':s==='Menunggu'?'t-wa':'t-er';
+
+/* ---------- navigasi ---------- */
+function show(v){
+  ['tempah','jadual','admin'].forEach(x=>$('#v-'+x).classList.toggle('hide',x!==v));
+  $$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  if(v==='jadual')renderJadual();
+  if(v==='admin')renderAdmin();
+}
+$$('#nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));
+
+/* ---------- tempah ---------- */
+function renderLabCards(){
+  $('#labCards').innerHTML=D.labs.map(l=>`<div class="card lab" style="margin:0">
+    <h3>${esc(l.name)} <span class="tag ${l.status==='Aktif'?'t-ok':'t-er'}">${esc(l.status)}</span></h3>
+    <p>Kapasiti: ${l.capacity} orang · ${l.pcs} komputer</p><p>${esc(l.notes)}</p>${eqSummary(l.id)}</div>`).join('');
+}
+function renderSlots(){
+  const l=$('#fLab').value,d=$('#fDate').value;
+  if(!l||!d){$('#slotView').innerHTML='';return}
+  let h='<span class="muted" style="font-size:13px;width:100%">Ketersediaan pada tarikh dipilih:</span>';
+  for(let t=D.settings.open;t+30<=D.settings.close;t+=30){
+    const o=D.bookings.find(b=>b.status!=='Ditolak'&&b.lab==l&&b.date===d&&t>=b.start&&t<b.end);
+    const c=!o?'s-free':o.status==='Menunggu'?'s-pn':'s-bk';
+    h+=`<span class="slot ${c}">${hh(t)}–${hh(t+30)}${o?(o.status==='Menunggu'?' · menunggu':' · penuh'):''}</span>`;
+  }
+  $('#slotView').innerHTML=h;
+}
+/* ---------- peralatan ---------- */
+const eqTag=s=>s==='Tersedia'?'t-ok':s==='Rosak'?'t-er':'t-wa';
+const eqName=q=>q?q.name+(q.brand?' ('+q.brand+')':''):'?';
+const eqSummary=id=>{const a=D.equipment.filter(q=>q.lab===id);return a.length?'<p>Peralatan: '+a.map(q=>esc(eqName(q))+' ×'+q.total).join(', ')+'</p>':''};
+function eqUsed(id,date,start,end,ignore){
+  if(!date||!(end>start))return 0;
+  return D.bookings.filter(o=>o.id!==ignore&&o.status!=='Ditolak'&&o.date===date&&start<o.end&&o.start<end)
+    .reduce((n,o)=>n+((o.equip||[]).find(x=>x.id===id)?.qty||0),0);
+}
+const eqLine=b=>{const t=(b.equip||[]).map(x=>`${esc(eqName(D.equipment.find(e=>e.id===x.id)))} ×${x.qty}`).join(', ');return t?`<br><span class="muted">Peralatan: ${t}</span>`:''};
+function readEq(box){
+  const a=[];
+  box.querySelectorAll('.eq').forEach(r=>{const c=r.querySelector('input[type=checkbox]');if(c.checked&&!c.disabled)a.push({id:+r.dataset.id,qty:Math.max(1,+r.querySelector('input[type=number]').value||1)})});
+  return a;
+}
+function renderEqBox(box,d,s,e,ignore,adm,cur,lab){
+  const list=D.equipment.filter(q=>q.lab===lab);
+  if(!list.length){box.innerHTML='<p class="muted" style="font-size:13px;margin:0">Tiada peralatan untuk makmal ini.</p>';return}
+  cur=cur||readEq(box);
+  box.innerHTML=list.map(q=>{
+    const ok=q.status==='Tersedia'||adm;
+    const av=Math.max(0,q.total-eqUsed(q.id,d,s,e,ignore));
+    const on=ok&&av>0,c=cur.find(x=>x.id===q.id);
+    return `<div class="eq" data-id="${q.id}"><input type="checkbox" ${c&&on?'checked':''} ${on?'':'disabled'}><div class="nm"><b>${esc(q.name)}</b>${q.brand?' <span class="muted">('+esc(q.brand)+')</span>':''} <span class="tag ${eqTag(q.status)}">${q.status}</span><br><span class="muted" style="font-size:13px">Jumlah ${q.total} · ${ok?'Baki '+av+' pada masa dipilih':'Tidak tersedia'}${q.notes?' · '+esc(q.notes):''}</span></div><input type="number" min="1" max="${av}" value="${Math.max(1,Math.min(c?c.qty:1,av||1))}" ${on?'':'disabled'}></div>`;
+  }).join('');
+}
+const renderEq=()=>renderEqBox($('#eqList'),$('#fDate').value,+$('#fStart').value,+$('#fEnd').value,undefined,false,undefined,+$('#fLab').value);
+const renderDEq=()=>renderEqBox($('#dEq'),$('#dDate').value,+$('#dStart').value,+$('#dEnd').value,editId,true,undefined,+$('#dLab').value);
+
+function initForm(){
+  labOptions($('#fLab'),true);
+  fillHours($('#fStart'),$('#fEnd'));
+  $('#fDate').min=today();
+  if(!$('#fDate').value)$('#fDate').value=today();
+  renderEq();
+  renderSlots();
+}
+['fLab','fDate'].forEach(i=>$('#'+i).onchange=()=>{renderSlots();renderEq()});
+$('#fEnd').onchange=renderEq;
+$('#fStart').onchange=()=>{const s=+$('#fStart').value;hoursOpts($('#fEnd'),s+30,D.settings.close,Math.max(s+30,+$('#fEnd').value||s+30));renderEq()};
+const note=(el,t,c)=>{el.innerHTML=t?`<div class="msg ${c}">${t}</div>`:''};
+function validate(b,ignore,adminMode){
+  if(!b.lab)return'Sila pilih makmal.';
+  if(!b.date)return'Sila pilih tarikh.';
+  if(!adminMode&&b.date<today())return'Tarikh tidak boleh pada masa lalu.';
+  if(b.end<=b.start)return'Masa tamat mesti selepas masa mula.';
+  if(!b.name.trim()||!b.staffId.trim()||!b.purpose.trim())return'Sila isi nama, no. ID dan tujuan.';
+  const L=lab(b.lab);
+  if(!b.pax||b.pax<1)return'Bilangan peserta tidak sah.';
+  if(!adminMode&&b.pax>L.capacity)return`Bilangan peserta melebihi kapasiti makmal (${L.capacity}).`;
+  const o=overlap(b,ignore);
+  if(o)return`Bertindih dengan tempahan ${hh(o.start)}–${hh(o.end)} (${esc(o.name)}).`;
+  for(const x of b.equip||[]){
+    const q=D.equipment.find(e=>e.id===x.id);if(!q||q.lab!==b.lab)continue;
+    if(!adminMode&&q.status!=='Tersedia')return`Peralatan ${esc(q.name)} tidak tersedia.`;
+    const av=q.total-eqUsed(q.id,b.date,b.start,b.end,ignore);
+    if(x.qty>av)return`Peralatan ${esc(q.name)} tidak mencukupi (baki ${Math.max(0,av)}).`;
+  }
+  return'';
+}
+$('#fSend').onclick=()=>{
+  const b={id:nextId(),lab:+$('#fLab').value,date:$('#fDate').value,start:+$('#fStart').value,end:+$('#fEnd').value,
+    name:$('#fName').value,staffId:$('#fId').value,pax:+$('#fPax').value,purpose:$('#fPur').value,status:'Menunggu',equip:readEq($('#eqList'))};
+  const err=validate(b);
+  if(err){note($('#fMsg'),err,'e');return}
+  D.bookings.push(b);save();
+  note($('#fMsg'),`Tempahan dihantar: ${esc(lab(b.lab).name)}, ${b.date}, ${hh(b.start)}–${hh(b.end)}. Menunggu kelulusan admin.`,'s');
+  ['fName','fId','fPur'].forEach(i=>$('#'+i).value='');
+  $$('#eqList input[type=checkbox]').forEach(c=>c.checked=false);renderEq();
+  renderSlots();
+};
+
+/* ---------- jadual ---------- */
+function renderJadual(){
+  labOptions($('#jLab'),false,true);
+  if(!$('#jDate').value)$('#jDate').value=today();
+  const l=$('#jLab').value,d=$('#jDate').value;
+  const rows=D.bookings.filter(b=>(!l||b.lab==l)&&(!d||b.date===d)).sort((a,b)=>a.start-b.start);
+  $('#jTable').innerHTML=rows.length?`<table><tr><th>Masa</th><th>Makmal</th><th>Penempah</th><th>Tujuan</th><th>Status</th></tr>`+
+    rows.map(b=>`<tr><td>${hh(b.start)}–${hh(b.end)}</td><td>${esc(lab(b.lab)?.name)}</td><td>${esc(b.name)}</td><td class="wr">${esc(b.purpose)}${eqLine(b)}</td><td><span class="tag ${tagFor(b.status)}">${b.status}</span></td></tr>`).join('')+'</table>'
+    :'<p class="muted">Tiada tempahan untuk pilihan ini.</p>';
+}
+$('#jLab').onchange=$('#jDate').onchange=renderJadual;
+
+/* ---------- admin ---------- */
+function renderAdmin(){
+  $('#loginBox').classList.toggle('hide',isAdmin);
+  $('#panel').classList.toggle('hide',!isAdmin);
+  if(!isAdmin)return;
+  labOptions($('#aLab'),false,true);
+  renderAdminTable();renderAdminLabs();renderEqAdmin();updEqSel();
+  $('#sOpen').value=hh(D.settings.open);$('#sClose').value=hh(D.settings.close);
+}
+$('#aLogin').onclick=()=>{
+  if($('#aPass').value===D.settings.pass){isAdmin=true;$('#aPass').value='';note($('#aMsg'),'');renderAdmin()}
+  else note($('#aMsg'),'Kata laluan salah.','e');
+};
+$('#aPass').onkeydown=e=>{if(e.key==='Enter')$('#aLogin').click()};
+$('#aOut').onclick=()=>{isAdmin=false;renderAdmin()};
+$$('[data-a]').forEach(b=>b.onclick=()=>{
+  $$('[data-a]').forEach(x=>x.classList.toggle('pri',x===b));
+  ['bk','lb','eq','st'].forEach(k=>$('#a-'+k).classList.toggle('hide',k!==b.dataset.a));
+});
+function renderAdminTable(){
+  const l=$('#aLab').value,s=$('#aSt').value;
+  const rows=D.bookings.filter(b=>(!l||b.lab==l)&&(!s||b.status===s)).sort((a,b)=>a.date.localeCompare(b.date)||a.start-b.start);
+  $('#aTable').innerHTML=rows.length?`<table><tr><th>Tarikh</th><th>Masa</th><th>Makmal</th><th>Penempah</th><th>Pax</th><th>Tujuan</th><th>Status</th><th>Tindakan</th></tr>`+
+   rows.map(b=>`<tr><td>${b.date}</td><td>${hh(b.start)}–${hh(b.end)}</td><td>${esc(lab(b.lab)?.name)}</td><td>${esc(b.name)}<br><span class="muted">${esc(b.staffId)}</span></td><td>${b.pax}</td><td class="wr">${esc(b.purpose)}${eqLine(b)}</td>
+   <td><span class="tag ${tagFor(b.status)}">${b.status}</span></td>
+   <td><div class="acts"><button class="sm ok" data-act="Diluluskan" data-id="${b.id}">Lulus</button><button class="sm er" data-act="Ditolak" data-id="${b.id}">Tolak</button><button class="sm" data-act="edit" data-id="${b.id}">Edit</button><button class="sm er" data-act="del" data-id="${b.id}">Padam</button></div></td></tr>`).join('')+'</table>'
+   :'<p class="muted">Tiada tempahan.</p>';
+  $$('#aTable [data-act]').forEach(btn=>btn.onclick=()=>{
+    const id=+btn.dataset.id,a=btn.dataset.act,b=D.bookings.find(x=>x.id===id);
+    if(a==='edit')return openDlg(b);
+    if(a==='del'){ask('Padam tempahan ini?').then(y=>{if(y){D.bookings=D.bookings.filter(x=>x.id!==id);save();renderAdminTable()}});return}
+    if(a==='Diluluskan'){const o=overlap(b,id);if(o&&b.status==='Ditolak'){alert('Bertindih dengan tempahan lain.');return}}
+    b.status=a;save();renderAdminTable();
+  });
+}
+$('#aLab').onchange=$('#aSt').onchange=renderAdminTable;
+
+/* dialog tempahan */
+let editId=null;
+function openDlg(b){
+  editId=b?b.id:null;
+  $('#dTitle').textContent=b?'Edit tempahan':'Tambah tempahan';
+  labOptions($('#dLab'));
+  fillHours($('#dStart'),$('#dEnd'),b?.start,b?.end);
+  $('#dLab').value=b?.lab??D.labs[0].id;
+  $('#dDate').value=b?.date??today();
+  $('#dName').value=b?.name??'';$('#dId').value=b?.staffId??'';
+  $('#dPax').value=b?.pax??1;$('#dPur').value=b?.purpose??'';
+  $('#dSt').value=b?.status??'Diluluskan';
+  note($('#dMsg'),'');renderEqBox($('#dEq'),$('#dDate').value,+$('#dStart').value,+$('#dEnd').value,editId,true,b?.equip||[],+$('#dLab').value);$('#dlg').showModal();
+}
+$('#dStart').onchange=()=>{const s=+$('#dStart').value;hoursOpts($('#dEnd'),s+30,D.settings.close,Math.max(s+30,+$('#dEnd').value||s+30));renderDEq()};
+$('#dDate').onchange=$('#dEnd').onchange=$('#dLab').onchange=renderDEq;
+$('#aAdd').onclick=()=>openDlg(null);
+$('#dCancel').onclick=()=>$('#dlg').close();
+$('#dSave').onclick=()=>{
+  const b={id:editId??nextId(),lab:+$('#dLab').value,date:$('#dDate').value,start:+$('#dStart').value,end:+$('#dEnd').value,
+    name:$('#dName').value,staffId:$('#dId').value,pax:+$('#dPax').value,purpose:$('#dPur').value,status:$('#dSt').value,equip:readEq($('#dEq'))};
+  const err=b.status==='Ditolak'?(b.end<=b.start?'Masa tamat mesti selepas masa mula.':''):validate(b,editId,true);
+  if(err){note($('#dMsg'),err,'e');return}
+  if(editId==null)D.bookings.push(b);else D.bookings[D.bookings.findIndex(x=>x.id===editId)]=b;
+  save();$('#dlg').close();renderAdminTable();
+};
+
+/* data makmal */
+function renderAdminLabs(){
+  $('#aLabs').innerHTML=D.labs.map(l=>`<div class="card" style="margin:0" data-lab="${l.id}">
+    <div style="margin-bottom:8px"><label>Nama makmal</label><input class="ln" value="${esc(l.name)}"></div>
+    <div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:8px">
+      <div><label>Kapasiti</label><input type="number" min="1" class="lc" value="${l.capacity}"></div>
+      <div><label>Komputer</label><input type="number" min="0" class="lp" value="${l.pcs}"></div>
+      <div><label>Status</label><select class="ls"><option${l.status==='Aktif'?' selected':''}>Aktif</option><option${l.status!=='Aktif'?' selected':''}>Penyelenggaraan</option></select></div>
+    </div>
+    <div><label>Catatan / kemudahan</label><textarea class="lt" rows="2">${esc(l.notes)}</textarea></div>
+    <div class="row"><button class="pri lsave">Simpan</button></div></div>`).join('');
+  $$('.lsave').forEach(btn=>btn.onclick=()=>{
+    const c=btn.closest('[data-lab]'),l=lab(c.dataset.lab);
+    l.name=c.querySelector('.ln').value.trim()||l.name;
+    l.capacity=+c.querySelector('.lc').value||1;
+    l.pcs=+c.querySelector('.lp').value||0;
+    l.status=c.querySelector('.ls').value;
+    l.notes=c.querySelector('.lt').value;
+    save();btn.textContent='Disimpan ✓';setTimeout(()=>btn.textContent='Simpan',1200);
+    labOptions($('#aLab'),false,true);renderAdminTable();refreshPublic();
+  });
+}
+
+/* peralatan (admin) */
+function renderEqAdmin(){
+  const st=['Tersedia','Rosak','Penyelenggaraan'];labOptions($('#eLab'));
+  $('#eTable').innerHTML=D.equipment.length?`<table><tr><th><input type="checkbox" id="eAll"></th><th>Makmal</th><th>Nama</th><th>Jenama</th><th>Jumlah</th><th>Status</th><th>Catatan</th><th></th></tr>`+
+    [...D.equipment].sort((a,b)=>a.lab-b.lab||a.id-b.id).map(q=>`<tr data-id="${q.id}"><td><input type="checkbox" class="ec"></td><td>${esc(lab(q.lab)?.name||'-')}</td><td><input class="en" value="${esc(q.name)}"></td><td><input class="eb" value="${esc(q.brand||'')}"></td><td><input type="number" min="0" class="et" value="${q.total}" style="width:80px"></td><td><select class="es">${st.map(s=>`<option${s===q.status?' selected':''}>${s}</option>`).join('')}</select></td><td><input class="eo" value="${esc(q.notes||'')}"></td><td><div class="acts"><button class="sm pri esv">Simpan</button><button class="sm er edl">Padam</button></div></td></tr>`).join('')+'</table>'
+    :'<p class="muted">Belum ada peralatan. Tambah peralatan pertama di atas.</p>';
+  $$('#eTable .esv').forEach(b=>b.onclick=()=>{
+    const r=b.closest('tr'),q=D.equipment.find(x=>x.id==r.dataset.id),n=r.querySelector('.en').value.trim();
+    if(!n){note($('#eMsg'),'Nama peralatan tidak boleh kosong.','e');return}
+    q.name=n;q.brand=r.querySelector('.eb').value.trim();q.total=Math.max(0,Math.floor(+r.querySelector('.et').value||0));q.status=r.querySelector('.es').value;q.notes=r.querySelector('.eo').value.trim();
+    save();refreshPublic();note($('#eMsg'),'Peralatan dikemas kini.','s');
+  });
+  $$('#eTable .edl').forEach(b=>b.onclick=async()=>{
+    const id=+b.closest('tr').dataset.id;
+    if(!await ask('Padam peralatan ini? Ia juga akan dibuang daripada tempahan sedia ada.'))return;
+    D.equipment=D.equipment.filter(q=>q.id!==id);
+    D.bookings.forEach(x=>x.equip=(x.equip||[]).filter(e=>e.id!==id));
+    save();refreshPublic();renderEqAdmin();renderAdminTable();updEqSel();
+  });
+}
+function updEqSel(){const n=$$('#eTable .ec:checked').length;$('#eDelSel').classList.toggle('hide',!n);$('#eSelN').textContent=n?n+' dipilih':''}
+$('#eTable').addEventListener('change',e=>{
+  if(e.target.id==='eAll')$$('#eTable .ec').forEach(c=>c.checked=e.target.checked);
+  if(e.target.id==='eAll'||e.target.classList.contains('ec'))updEqSel();
+});
+$('#eDelSel').onclick=async()=>{
+  const ids=$$('#eTable .ec:checked').map(c=>+c.closest('tr').dataset.id);
+  if(!ids.length)return;
+  if(!await ask(`Padam ${ids.length} peralatan yang dipilih? Ia juga akan dibuang daripada tempahan sedia ada.`))return;
+  D.equipment=D.equipment.filter(q=>!ids.includes(q.id));
+  D.bookings.forEach(x=>x.equip=(x.equip||[]).filter(e=>!ids.includes(e.id)));
+  save();refreshPublic();renderEqAdmin();renderAdminTable();updEqSel();
+  note($('#eMsg'),`${ids.length} peralatan dipadam.`,'s');
+};
+$('#eAdd').onclick=()=>{
+  const n=$('#eName').value.trim(),t=Math.floor(+$('#eTotal').value);
+  if(!n){note($('#eMsg'),'Sila isi nama peralatan.','e');return}
+  if(!(t>=0)){note($('#eMsg'),'Jumlah tidak sah.','e');return}
+  D.equipment.push({id:Math.max(0,...D.equipment.map(q=>q.id))+1,lab:+$('#eLab').value,name:n,brand:$('#eBrand').value.trim(),total:t,status:$('#eStat').value,notes:$('#eNote').value.trim()});
+  save();['eName','eBrand','eNote'].forEach(i=>$('#'+i).value='');$('#eTotal').value=1;
+  note($('#eMsg'),'Peralatan ditambah.','s');refreshPublic();renderEqAdmin();updEqSel();
+};
+
+/* tetapan */
+$('#sSave').onclick=()=>{
+  const tm=v=>{const p=(v||'').split(':');return p.length<2?NaN:+p[0]*60+(+p[1])},o=tm($('#sOpen').value),c=tm($('#sClose').value);
+  if(!(o>=0&&c<=1440&&c-o>=30)){note($('#sMsg'),'Waktu buka/tutup tidak sah.','e');return}
+  D.settings.open=o;D.settings.close=c;
+  if($('#sPass').value.trim().length){
+    if($('#sPass').value.length<6){note($('#sMsg'),'Kata laluan minimum 6 aksara.','e');return}
+    D.settings.pass=$('#sPass').value;$('#sPass').value='';
+  }
+  save();refreshPublic();note($('#sMsg'),'Tetapan disimpan.','s');
+};
+$('#sReset').onclick=async()=>{
+  if(await ask('Padam semua tempahan dan set semula data makmal serta kata laluan?')){
+    D=defaults();save();isAdmin=false;refreshPublic();renderAdmin();
+  }
+};
+
+/* pengesahan dalam halaman (confirm() disekat dalam paparan terbenam) */
+function ask(msg){return new Promise(res=>{
+  const d=$('#cfm');$('#cMsg').textContent=msg;
+  $('#cYes').onclick=()=>{d.close();res(true)};
+  $('#cNo').onclick=()=>{d.close();res(false)};
+  d.oncancel=()=>res(false);
+  d.showModal();
+})}
+
+/* ---------- segerak Google Sheet ---------- */
+var SHEET_ID='17Yy4zS4vU-PTmsrZtA92Ve12Nwf-dP0EwMCQgj5oaA4',mcp=null,syncTimer=null,syncBusy=false,syncAgain=false;
+const setSync=(t,c)=>{const el=$('#syncStat');el.textContent=t;el.style.color=c==='e'?'var(--er)':c==='s'?'var(--ok)':'var(--mu)'};
+function queueSync(){
+  if(!mcp||!isAdmin)return;
+  clearTimeout(syncTimer);syncTimer=setTimeout(syncNow,1200);
+}
+function pad(rows,n,w){while(rows.length<n)rows.push(Array(w).fill(''));return rows}
+function sheetRows(){
+  const bk=[...D.bookings].sort((a,b)=>a.date.localeCompare(b.date)||a.start-b.start).map(b=>[b.id,lab(b.lab)?.name||'',b.date,hh(b.start),hh(b.end),b.name,b.staffId,b.pax,b.purpose,b.status,(b.equip||[]).map(x=>eqName(D.equipment.find(e=>e.id===x.id))+' ×'+x.qty).join(', ')]);
+  const lb=D.labs.map(l=>[l.id,l.name,l.capacity,l.pcs,l.status,l.notes]);
+  const eq=[...D.equipment].sort((a,b)=>a.lab-b.lab||a.id-b.id).map(q=>[q.id,lab(q.lab)?.name||'',q.name,q.brand||'',q.total,q.status,q.notes||'']);
+  return{
+    Tempahan:pad([['ID','Makmal','Tarikh','Masa Mula','Masa Tamat','Nama Penempah','No. ID','Peserta','Tujuan','Status','Peralatan'],...bk],300,11),
+    Makmal:pad([['ID','Nama Makmal','Kapasiti','Bilangan Komputer','Status','Catatan / Kemudahan'],...lb],50,6),
+    Peralatan:pad([['ID','Makmal','Nama Peralatan','Jenama','Jumlah','Status','Catatan'],...eq],300,7)
+  };
+}
+async function syncNow(){
+  if(!mcp||!isAdmin)return;
+  if(syncBusy){syncAgain=true;return}
+  syncBusy=true;setSync('Menyegerak ke Google Sheet…');
+  try{
+    const sets=sheetRows();
+    for(const name in sets){
+      const v=sets[name],col=String.fromCharCode(64+v[0].length);
+      await mcp.callTool('Google Sheets','update_values',{spreadsheetId:SHEET_ID,range:name+'!A1:'+col+v.length,values:v});
+    }
+    setSync('Disegerak '+new Date().toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'}),'s');
+  }catch(e){
+    const m={needs_reauth:'Sambungan Google Sheets tamat. Sambung semula di claude.ai.',server_not_connected:'Google Sheets belum disambungkan.',approval_required:'Kebenaran diperlukan. Tekan butang segerak dan benarkan akses.',not_in_manifest:'Akses Google Sheets tidak dibenarkan untuk halaman ini.',blocked_by_policy:'Dasar organisasi menyekat akses Google Sheets.',tool_error:'Google Sheets menolak penulisan. Semak akses kepada sheet.'};
+    setSync(m[e&&e.code]||'Gagal segerak. Tekan butang segerak untuk cuba lagi.','e');
+  }
+  syncBusy=false;
+  if(syncAgain){syncAgain=false;queueSync()}
+}
+$('#aSync').onclick=syncNow;
+(async()=>{try{
+  const u=await claude.use('user');
+  if(!(u&&await u.isOwner()))return;
+  const m=await claude.use('mcp');
+  if(m){mcp=m;$('#aSync').classList.remove('hide')}
+}catch(e){}})();
+
+function refreshPublic(){renderLabCards();initForm()}
+refreshPublic();
+</script>
+</body>
+</html>
